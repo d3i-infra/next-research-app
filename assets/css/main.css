@@ -236,31 +236,16 @@ a:hover { text-decoration-thickness: 2px; }
 
 /* 4. Layout & sections ==================================================== */
 .container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 var(--space-5); }
-.site-main { flex: 1 0 auto; padding: var(--space-7) 0 var(--space-9); counter-reset: section; }
+.site-main { flex: 1 0 auto; padding: var(--space-7) 0 var(--space-9); }
 
 .section { margin-top: var(--space-9); }
 
-/* Numbered section headings, like a paper: a mono number in signal, the
-   title in the serif, a hairline across the column. */
+/* Section headings: the serif under a rule across the column. */
 .section__title {
-  counter-increment: section;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: baseline;
-  column-gap: var(--space-4);
   font-size: var(--step-3);
   padding-top: var(--space-4);
   border-top: var(--rule-heavy);
   margin-bottom: var(--space-6);
-}
-.section__title::before {
-  content: counter(section, decimal-leading-zero);
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
-  font-weight: 500;
-  letter-spacing: 0;
-  color: var(--color-accent);
-  transform: translateY(-0.35em);
 }
 
 .page-header { margin-bottom: var(--space-8); max-width: 52rem; }
@@ -286,18 +271,10 @@ a:hover { text-decoration-thickness: 2px; }
   .card-grid--3, .column-grid--3, .tile-grid--3 { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* About: three columns, numbered i, ii, iii. */
-.column-grid { counter-reset: column; gap: var(--space-6); }
-.column { counter-increment: column; padding-top: var(--space-4); border-top: var(--rule-heavy); }
+/* About: three columns under a rule. */
+.column-grid { gap: var(--space-6); }
+.column { padding-top: var(--space-4); border-top: var(--rule-heavy); }
 .column__title { font-size: var(--step-2); }
-.column__title::before {
-  content: counter(column, lower-roman) ".";
-  display: block;
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
-  color: var(--color-accent);
-  margin-bottom: var(--space-2);
-}
 .column__body { color: var(--color-muted); margin: 0; }
 
 /* 5. Header =============================================================== */
@@ -443,23 +420,14 @@ a:hover { text-decoration-thickness: 2px; }
 .media--avatar .media__image { width: 100%; height: 100%; object-fit: cover; border-radius: 0; }
 
 /* 8. Lists, tiles, logos, badge, panel ==================================== */
-/* Tiles: small cards; "What you can do" keeps its a, b, c in signal. */
-.tile-grid { list-style: none; padding: 0; margin: 0; counter-reset: tile; gap: var(--space-4); }
+/* Tiles: small cards. */
+.tile-grid { list-style: none; padding: 0; margin: 0; gap: var(--space-4); }
 .tile {
-  counter-increment: tile;
-  display: flex; align-items: baseline; gap: var(--space-3);
+  display: flex; align-items: center;
   padding: var(--space-4) var(--space-5);
   font-size: var(--step-0);
 }
 .tile-grid--centered .tile { justify-content: center; text-align: center; font-size: var(--step--1); }
-.tile-grid--centered .tile::before { display: none; }
-.tile::before {
-  content: counter(tile, lower-alpha) ".";
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
-  color: var(--color-accent);
-  min-width: 1.5em;
-}
 
 .logo-row { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); }
 .logo-row__link { display: block; text-decoration: none; }
