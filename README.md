@@ -19,7 +19,7 @@ in a Chromium browser and choose "Work with Local Repository".
 | What | Where |
 |------|-------|
 | Page content (all of it is front matter) | `index.md`, `_pages/*.md` |
-| Lists shared across pages | `_data/funders.yml`, `team.yml`, `collaborators.yml` |
+| Lists shared across pages | `_data/funders.yml` |
 | Site name, logo, footer, "Have a study in mind?" banner | `_data/settings.yml` |
 | Navigation (developer-owned) | `_data/navigation.yml` |
 | Page structure | `_layouts/` (one per page type), `_includes/` |

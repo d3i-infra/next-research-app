@@ -33,12 +33,10 @@ The D3I daily cron rebuild and `production` snapshot branch were dropped: this s
 | Pages → Why our app? | `_pages/why-our-app.md` | `_layouts/why.html` |
 | Pages → About | `_pages/about.md` | `_layouts/about.html` |
 | Pages → Funding Bodies | `_pages/funding-bodies.md` | `_layouts/funding.html` (cards from Funders) |
-| Pages → Team / Collaborators | `_pages/team.md` | `_layouts/team.html` (from Core team + Collaborating organisations) |
+| Pages → Team / Collaborators | `_pages/team.md` | `_layouts/team.html` (members and organisations are lists in the page itself) |
 | Pages → Contact Us | `_pages/contact.md` | `_layouts/contact.html` |
 | Pages → Contact: thank-you page | `_pages/contact-thanks.md` | `_layouts/page.html` |
 | Lists → Funders | `_data/funders.yml` | Funding Bodies cards + footer "Funded by" (`show_in_footer`) |
-| Lists → Core team | `_data/team.yml` | Team page |
-| Lists → Collaborating organisations | `_data/collaborators.yml` | Team page logo row |
 | Site settings | `_data/settings.yml` | Header, footer, "Have a study in mind?" banner |
 
 **Not in the CMS, on purpose:**

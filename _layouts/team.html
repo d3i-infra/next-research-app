@@ -12,7 +12,7 @@ layout: default
 <section class="section core-team">
   <h2 class="section__title">{{ page.core_team_title | default: "Core team" }}</h2>
   <div class="card-grid card-grid--3">
-    {%- for person in site.data.team.members %}
+    {%- for person in page.members %}
     <article class="person-card">
       {%- capture photo_alt %}Photo of {{ person.name }}{% endcapture %}
       {% include media.html src=person.photo alt=photo_alt class="media--avatar" %}
@@ -34,7 +34,7 @@ layout: default
   </div>
 </section>
 
-{%- assign orgs = site.data.collaborators.organisations -%}
+{%- assign orgs = page.organisations -%}
 {%- if orgs and orgs.size > 0 %}
 <section class="section collaborators">
   <h2 class="section__title">{{ page.collaborators_title | default: "Collaborating organisations" }}</h2>

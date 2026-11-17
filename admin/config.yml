@@ -287,12 +287,48 @@ collections:
         name: team_page
         label: "Team / Collaborators"
         icon: groups
-        description: "Page text. People and organisations come from Lists → Core team and Lists → Collaborating organisations."
+        description: "Page text, team members and collaborating organisations."
         fields:
           - { name: title, label: "Heading", widget: string }
           - { name: intro, label: "Intro", widget: markdown, required: false }
           - { name: core_team_title, label: "Core team heading", widget: string }
+          - name: members
+            label: "Core team members"
+            label_singular: "Member"
+            widget: list
+            summary: "{{name}} ({{role}})"
+            comment: "Add, remove or drag to reorder. Order here = order on the page."
+            fields:
+              - { name: name, label: "Name", widget: string }
+              - { name: role, label: "Role", widget: string, required: false }
+              - { name: organisation, label: "Organisation", widget: string, required: false }
+              - name: photo
+                label: "Photo"
+                widget: image
+                required: false
+                media_folder: /assets/images/team
+                public_folder: /assets/images/team
+                choose_url: false
+                accept: "image/jpeg,image/png,image/webp"
+              - { name: url, label: "Profile link", widget: string, required: false }
           - { name: collaborators_title, label: "Organisations heading", widget: string }
+          - name: organisations
+            label: "Collaborating organisations"
+            label_singular: "Organisation"
+            widget: list
+            summary: "{{name}}"
+            comment: "Logo row at the bottom of the page. Order here = order on the page."
+            fields:
+              - { name: name, label: "Name (also the logo's alt text)", widget: string }
+              - name: logo
+                label: "Logo"
+                widget: image
+                required: false
+                media_folder: /assets/images/collaborators
+                public_folder: /assets/images/collaborators
+                choose_url: false
+                accept: "image/jpeg,image/png,image/svg+xml,image/webp"
+              - { name: url, label: "Website", widget: string, required: false }
           - { name: layout, widget: hidden, default: team }
           - { name: nav_key, widget: hidden, default: about }
           - { name: permalink, widget: hidden, default: /about/team/ }
@@ -331,7 +367,7 @@ collections:
   - name: lists
     label: "Lists"
     icon: list
-    description: "Lists shown on one or more pages. Order here = order on the site."
+    description: "Lists shared by several pages. Order here = order on the site."
     editor:
       preview: false
     files:
@@ -362,56 +398,6 @@ collections:
               - { name: description, label: "What they fund", widget: text, required: false }
               - { name: url, label: "Website", widget: string, required: false }
               - { name: show_in_footer, label: "Show in footer", widget: boolean, default: true }
-
-      - file: _data/team.yml
-        name: team
-        label: "Core team"
-        icon: people
-        format: yml
-        description: "People on the Team / Collaborators page."
-        fields:
-          - name: members
-            label: "Members"
-            label_singular: "Member"
-            widget: list
-            summary: "{{name}}"
-            fields:
-              - { name: name, label: "Name", widget: string }
-              - { name: role, label: "Role", widget: string, required: false }
-              - { name: organisation, label: "Organisation", widget: string, required: false }
-              - name: photo
-                label: "Photo"
-                widget: image
-                required: false
-                media_folder: /assets/images/team
-                public_folder: /assets/images/team
-                choose_url: false
-                accept: "image/jpeg,image/png,image/webp"
-              - { name: url, label: "Profile link", widget: string, required: false }
-
-      - file: _data/collaborators.yml
-        name: collaborators
-        label: "Collaborating organisations"
-        icon: handshake
-        format: yml
-        description: "Logo row on the Team / Collaborators page."
-        fields:
-          - name: organisations
-            label: "Organisations"
-            label_singular: "Organisation"
-            widget: list
-            summary: "{{name}}"
-            fields:
-              - { name: name, label: "Name (also the logo's alt text)", widget: string }
-              - name: logo
-                label: "Logo"
-                widget: image
-                required: false
-                media_folder: /assets/images/collaborators
-                public_folder: /assets/images/collaborators
-                choose_url: false
-                accept: "image/jpeg,image/png,image/svg+xml,image/webp"
-              - { name: url, label: "Website", widget: string, required: false }
 
   # ───────────────────────────────────────────────────────── Site settings
   - name: settings
