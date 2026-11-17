@@ -1,0 +1,74 @@
+---
+layout: default
+---
+{%- assign hero = page.hero -%}
+<section class="hero">
+  <div class="hero__text">
+    <h1 class="hero__title">{{ hero.title }}</h1>
+    {%- if hero.subtitle and hero.subtitle != "" %}
+    <p class="hero__subtitle">{{ hero.subtitle }}</p>
+    {%- endif %}
+    {%- if hero.body and hero.body != "" %}
+    <p class="hero__body">{{ hero.body }}</p>
+    {%- endif %}
+    {%- if hero.buttons and hero.buttons.size > 0 %}
+    <div class="button-row">
+      {%- for b in hero.buttons %}
+      {% include button.html label=b.label url=b.url style=b.style %}
+      {%- endfor %}
+    </div>
+    {%- endif %}
+  </div>
+  <div class="hero__media">
+    {% include media.html src=hero.image alt=hero.image_alt class="media--screenshot" %}
+  </div>
+</section>
+
+{%- if page.features %}
+<section class="section features">
+  <h2 class="section__title">{{ page.features.title }}</h2>
+  <div class="card-grid card-grid--3">
+    {%- for item in page.features.items %}
+    {% include icon-card.html item=item class="icon-card--stacked" %}
+    {%- endfor %}
+  </div>
+</section>
+{%- endif %}
+
+{%- if page.capabilities %}
+<section class="section capabilities">
+  <h2 class="section__title">{{ page.capabilities.title }}</h2>
+  <ul class="tile-grid tile-grid--3">
+    {%- for item in page.capabilities.items %}
+    <li class="tile">{{ item }}</li>
+    {%- endfor %}
+  </ul>
+</section>
+{%- endif %}
+
+{%- if page.why %}
+<section class="section why">
+  <h2 class="section__title">{{ page.why.title }}</h2>
+  <div class="prose">{{ page.why.body | markdownify }}</div>
+</section>
+{%- endif %}
+
+{%- assign r = page.researchers -%}
+{%- if r %}
+<section class="feature-panel researchers">
+  <div class="feature-panel__text">
+    <h2 class="feature-panel__title">{{ r.title }}</h2>
+    <div class="prose">{{ r.body | markdownify }}</div>
+    {%- if r.button %}
+    <div class="button-row">
+      {% include button.html label=r.button.label url=r.button.url style="secondary" %}
+    </div>
+    {%- endif %}
+  </div>
+  <div class="feature-panel__media">
+    {% include media.html src=r.image alt=r.image_alt class="media--illustration" %}
+  </div>
+</section>
+{%- endif %}
+
+{% include study-cta.html %}

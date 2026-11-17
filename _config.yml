@@ -1,0 +1,34 @@
+# Site identity for <head>/SEO. The visible site name, logo and footer text
+# are CMS-editable in _data/settings.yml.
+title: "The Next Research App"
+description: >-
+  An affordable, open-source research app for data collection in the social
+  sciences.
+baseurl: ""
+# TODO: set to the production domain once known.
+url: "https://example.org"
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/
+  - README.md
+  - docs/
+  - cms/
+
+include:
+  - _pages
+
+# Keep the CMS admin out of the sitemap.
+defaults:
+  - scope:
+      path: "admin"
+    values:
+      sitemap: false

@@ -1,0 +1,36 @@
+---
+layout: default
+---
+<header class="page-header">
+  {% include breadcrumb.html %}
+  <h1 class="page-title">{{ page.title }}</h1>
+  {%- if page.intro and page.intro != "" %}
+  <p class="page-intro">{{ page.intro }}</p>
+  {%- endif %}
+</header>
+
+<section class="section funders">
+  <h2 class="visually-hidden">Funders</h2>
+  <div class="card-grid card-grid--3">
+    {%- for funder in site.data.funders.funders %}
+    <article class="logo-card">
+      {%- capture logo_alt %}{{ funder.short_name | default: funder.name }} logo{% endcapture %}
+      {% include media.html src=funder.logo alt=logo_alt class="media--logo" %}
+      <h3 class="logo-card__title">{{ funder.name }}</h3>
+      {%- if funder.description and funder.description != "" %}
+      <p class="logo-card__body">{{ funder.description }}</p>
+      {%- endif %}
+      {%- if funder.url and funder.url != "" %}
+      <a class="logo-card__link" href="{{ funder.url }}">Website<span class="visually-hidden">: {{ funder.name }}</span></a>
+      {%- endif %}
+    </article>
+    {%- endfor %}
+  </div>
+</section>
+
+{%- if page.acknowledgement %}
+<section class="section acknowledgement">
+  <h2 class="section__title">{{ page.acknowledgement.title }}</h2>
+  <div class="panel prose">{{ page.acknowledgement.body | markdownify }}</div>
+</section>
+{%- endif %}

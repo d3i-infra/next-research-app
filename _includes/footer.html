@@ -1,0 +1,33 @@
+{%- assign settings = site.data.settings -%}
+<footer class="site-footer">
+  <div class="site-footer__inner container">
+    <div class="site-footer__funders">
+      <h2 class="site-footer__heading">{{ settings.funded_by_label }}</h2>
+      <ul class="funder-badges">
+        {%- for funder in site.data.funders.funders %}
+        {%- if funder.show_in_footer %}
+        <li class="funder-badge">
+          {%- if funder.url and funder.url != "" %}<a class="funder-badge__link" href="{{ funder.url }}">{% endif -%}
+          {%- if funder.logo and funder.logo != "" -%}
+            <img class="funder-badge__logo" src="{{ funder.logo | relative_url }}" alt="{{ funder.name }}">
+          {%- else -%}
+            <span class="funder-badge__name">{{ funder.short_name | default: funder.name }}</span>
+          {%- endif -%}
+          {%- if funder.url and funder.url != "" %}</a>{% endif %}
+        </li>
+        {%- endif %}
+        {%- endfor %}
+      </ul>
+    </div>
+    <div class="site-footer__meta">
+      <nav class="footer-nav" aria-label="Footer">
+        <ul class="footer-nav__list">
+          {%- for item in site.data.navigation.footer %}
+          <li class="footer-nav__item"><a class="footer-nav__link" href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+          {%- endfor %}
+        </ul>
+      </nav>
+      <p class="site-footer__copyright">{{ settings.copyright }}</p>
+    </div>
+  </div>
+</footer>

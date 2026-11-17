@@ -1,0 +1,59 @@
+---
+layout: default
+---
+<header class="page-header">
+  <h1 class="page-title">{{ page.title }}</h1>
+</header>
+
+{%- if page.columns and page.columns.size > 0 %}
+<section class="section columns">
+  <div class="column-grid column-grid--3">
+    {%- for col in page.columns %}
+    <div class="column">
+      <h2 class="column__title">{{ col.title }}</h2>
+      <p class="column__body">{{ col.body }}</p>
+    </div>
+    {%- endfor %}
+  </div>
+</section>
+{%- endif %}
+
+{%- if page.behind %}
+<section class="section behind">
+  <h2 class="section__title">{{ page.behind.title }}</h2>
+  <div class="prose">{{ page.behind.body | markdownify }}</div>
+  {%- if page.behind.cards and page.behind.cards.size > 0 %}
+  <div class="card-grid card-grid--2">
+    {%- for card in page.behind.cards %}
+    <article class="link-card">
+      <h3 class="link-card__title">{{ card.title }}</h3>
+      {%- if card.body and card.body != "" %}
+      <p class="link-card__body">{{ card.body }}</p>
+      {%- endif %}
+      {%- if card.link_url and card.link_url != "" %}
+      <a class="link-card__link" href="{{ card.link_url | relative_url }}">{{ card.link_text | default: "Read more" }}<span class="visually-hidden">: {{ card.title }}</span></a>
+      {%- endif %}
+    </article>
+    {%- endfor %}
+  </div>
+  {%- endif %}
+</section>
+{%- endif %}
+
+{%- if page.built %}
+<section class="section built">
+  <h2 class="section__title">{{ page.built.title }}</h2>
+  <div class="prose">{{ page.built.body | markdownify }}</div>
+</section>
+{%- endif %}
+
+{%- if page.considerations %}
+<section class="section considerations">
+  <h2 class="section__title">{{ page.considerations.title }}</h2>
+  <ul class="tile-grid tile-grid--3 tile-grid--centered">
+    {%- for item in page.considerations.items %}
+    <li class="tile">{{ item }}</li>
+    {%- endfor %}
+  </ul>
+</section>
+{%- endif %}

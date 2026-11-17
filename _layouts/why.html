@@ -1,0 +1,41 @@
+---
+layout: default
+---
+<header class="page-header">
+  {%- if page.eyebrow and page.eyebrow != "" %}
+  <p class="page-eyebrow">{{ page.eyebrow }}</p>
+  {%- endif %}
+  <h1 class="page-title">{{ page.title }}</h1>
+  {%- if page.intro and page.intro != "" %}
+  <p class="page-intro">{{ page.intro }}</p>
+  {%- endif %}
+</header>
+
+{%- assign f = page.focus -%}
+{%- if f %}
+<section class="feature-panel feature-panel--media-first focus">
+  <div class="feature-panel__media">
+    {% include media.html src=f.image alt=f.image_alt class="media--illustration" %}
+  </div>
+  <div class="feature-panel__text">
+    {%- if f.badge and f.badge != "" %}
+    <p class="badge">{{ f.badge }}</p>
+    {%- endif %}
+    <h2 class="feature-panel__title">{{ f.title }}</h2>
+    <p class="feature-panel__body">{{ f.body }}</p>
+  </div>
+</section>
+{%- endif %}
+
+{%- if page.reasons %}
+<section class="section reasons">
+  <h2 class="section__title">{{ page.reasons.title }}</h2>
+  <div class="card-grid card-grid--2">
+    {%- for item in page.reasons.items %}
+    {% include icon-card.html item=item class="icon-card--inline" %}
+    {%- endfor %}
+  </div>
+</section>
+{%- endif %}
+
+{% include study-cta.html %}

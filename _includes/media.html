@@ -1,0 +1,14 @@
+{%- comment -%}
+  An image, or a labelled placeholder box while no image is set.
+  Params: src, alt, class (modifier for the wrapper).
+  CMS writes '' for an empty image field, so test for "" explicitly.
+{%- endcomment -%}
+{%- if include.src and include.src != "" -%}
+<figure class="media {{ include.class }}">
+  <img class="media__image" src="{{ include.src | relative_url }}" alt="{{ include.alt }}">
+</figure>
+{%- else -%}
+<div class="media media--placeholder {{ include.class }}" role="img" aria-label="{{ include.alt }}">
+  <span class="media__placeholder-label">{{ include.alt }}</span>
+</div>
+{%- endif -%}

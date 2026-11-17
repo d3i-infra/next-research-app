@@ -1,0 +1,447 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+#
+# Sveltia CMS config. Validated in CI by cms/validate-config.mjs against the
+# schema of the version pinned in admin/index.html: a hard schema error
+# blocks sign-in for everyone. See cms/maintainer-notes.md.
+#
+# Content model in one line: every page is a file whose front matter holds
+# its content as fields (no Liquid in editable text); lists shared by
+# several pages live in _data/. Layout, permalink, nav_key and parent are
+# developer-owned and kept as hidden fields so saves preserve them.
+backend:
+  name: github
+  # TODO: set to the new repository (owner/name).
+  repo: OWNER/REPO
+  branch: cms-staging
+  # Shows the "Publish Changes" button (fires the sveltia-cms-publish
+  # repository_dispatch → .github/workflows/publish-cms-edits.yml) and
+  # prefixes save commits with [skip ci] (harmless: nothing builds off
+  # cms-staging pushes).
+  skip_ci: true
+
+# TODO: set to the staging URL (GitHub Pages) of the new repository.
+site_url: https://OWNER.github.io/REPO
+display_url: https://OWNER.github.io/REPO
+app_title: "The Next Research App admin"
+
+media_folder: assets/images
+public_folder: /assets/images
+
+# Raster uploads become WebP (max 2048px); SVGs are minified.
+media_libraries:
+  default:
+    config:
+      transformations:
+        raster_image:
+          format: webp
+          quality: 85
+          width: 2048
+          height: 2048
+        svg:
+          optimize: true
+
+collections:
+  # ───────────────────────────────────────────────────────────────── Pages
+  - name: pages
+    label: "Pages"
+    icon: article
+    description: "One entry per page of the site. Lists used on several pages (funders, team, organisations) are under Lists."
+    editor:
+      preview: false
+    files:
+
+      - file: index.md
+        name: home
+        label: "Home"
+        icon: home
+        fields:
+          - { name: title, label: "Page title (browser tab)", widget: string }
+          - name: hero
+            label: "Top of the page"
+            widget: object
+            fields:
+              - { name: title, label: "Heading", widget: string }
+              - { name: subtitle, label: "Subheading", widget: string, required: false }
+              - { name: body, label: "Text", widget: text, required: false }
+              - name: image
+                label: "App screenshot"
+                widget: image
+                required: false
+                media_folder: /assets/images/illustrations
+                public_folder: /assets/images/illustrations
+                choose_url: false
+                accept: "image/jpeg,image/png,image/svg+xml,image/webp"
+              - { name: image_alt, label: "Screenshot description (alt text)", widget: string }
+              - name: buttons
+                label: "Buttons"
+                label_singular: "Button"
+                widget: list
+                summary: "{{label}}"
+                max: 3
+                fields:
+                  - { name: label, label: "Label", widget: string }
+                  - { name: url, label: "Link", widget: string, comment: "Internal path (/about/) or full URL (https://…)." }
+                  - { name: style, label: "Style", widget: select, options: [primary, secondary], default: primary }
+          - name: features
+            label: "Feature cards"
+            widget: object
+            collapsed: true
+            summary: "{{title}}"
+            fields:
+              - { name: title, label: "Section heading", widget: string }
+              - name: items
+                label: "Cards"
+                label_singular: "Card"
+                widget: list
+                summary: "{{title}}"
+                fields:
+                  - name: icon
+                    label: "Icon"
+                    widget: image
+                    required: false
+                    media_folder: /assets/images/icons
+                    public_folder: /assets/images/icons
+                    choose_url: false
+                    accept: "image/png,image/svg+xml,image/webp"
+                  - { name: title, label: "Title", widget: string }
+                  - { name: body, label: "Text", widget: text, required: false }
+          - name: capabilities
+            label: "What you can do"
+            widget: object
+            collapsed: true
+            summary: "{{title}}"
+            fields:
+              - { name: title, label: "Section heading", widget: string }
+              - name: items
+                label: "Tiles"
+                label_singular: "Tile"
+                widget: list
+                field: { name: item, label: "Tile text", widget: string }
+          - name: why
+            label: "Why this app"
+            widget: object
+            collapsed: true
+            summary: "{{title}}"
+            fields:
+              - { name: title, label: "Section heading", widget: string }
+              - { name: body, label: "Text", widget: markdown }
+          - name: researchers
+            label: "Researchers panel"
+            widget: object
+            collapsed: true
+            summary: "{{title}}"
+            fields:
+              - { name: title, label: "Heading", widget: string }
+              - { name: body, label: "Text (bullet list)", widget: markdown }
+              - name: image
+                label: "Illustration"
+                widget: image
+                required: false
+                media_folder: /assets/images/illustrations
+                public_folder: /assets/images/illustrations
+                choose_url: false
+                accept: "image/jpeg,image/png,image/svg+xml,image/webp"
+              - { name: image_alt, label: "Illustration description (alt text)", widget: string }
+              - name: button
+                label: "Button"
+                widget: object
+                fields:
+                  - { name: label, label: "Label", widget: string }
+                  - { name: url, label: "Link", widget: string }
+          - { name: show_study_cta, label: "Show the 'Have a study in mind?' banner", widget: boolean, default: true, comment: "The banner text is edited in Site settings." }
+          - { name: layout, widget: hidden, default: home }
+          - { name: nav_key, widget: hidden, default: home }
+          - { name: permalink, widget: hidden, default: / }
+
+      - file: _pages/why-our-app.md
+        name: why
+        label: "Why our app?"
+        icon: lightbulb
+        fields:
+          - { name: eyebrow, label: "Label above heading", widget: string, required: false }
+          - { name: title, label: "Heading", widget: string }
+          - { name: intro, label: "Intro", widget: text, required: false }
+          - name: focus
+            label: "Focus panel"
+            widget: object
+            collapsed: true
+            summary: "{{title}}"
+            fields:
+              - { name: badge, label: "Badge", widget: string, required: false }
+              - { name: title, label: "Heading", widget: string }
+              - { name: body, label: "Text", widget: text }
+              - name: image
+                label: "Illustration"
+                widget: image
+                required: false
+                media_folder: /assets/images/illustrations
+                public_folder: /assets/images/illustrations
+                choose_url: false
+                accept: "image/jpeg,image/png,image/svg+xml,image/webp"
+              - { name: image_alt, label: "Illustration description (alt text)", widget: string }
+          - name: reasons
+            label: "Reasons"
+            widget: object
+            collapsed: true
+            summary: "{{title}}"
+            fields:
+              - { name: title, label: "Section heading", widget: string }
+              - name: items
+                label: "Cards"
+                label_singular: "Card"
+                widget: list
+                summary: "{{title}}"
+                fields:
+                  - name: icon
+                    label: "Icon"
+                    widget: image
+                    required: false
+                    media_folder: /assets/images/icons
+                    public_folder: /assets/images/icons
+                    choose_url: false
+                    accept: "image/png,image/svg+xml,image/webp"
+                  - { name: title, label: "Title", widget: string }
+                  - { name: body, label: "Text", widget: text, required: false }
+          - { name: show_study_cta, label: "Show the 'Have a study in mind?' banner", widget: boolean, default: true, comment: "The banner text is edited in Site settings." }
+          - { name: layout, widget: hidden, default: why }
+          - { name: nav_key, widget: hidden, default: why }
+          - { name: permalink, widget: hidden, default: /why-our-app/ }
+
+      - file: _pages/about.md
+        name: about
+        label: "About"
+        icon: info
+        fields:
+          - { name: title, label: "Heading", widget: string }
+          - name: columns
+            label: "Intro columns"
+            label_singular: "Column"
+            widget: list
+            summary: "{{title}}"
+            max: 3
+            fields:
+              - { name: title, label: "Heading", widget: string }
+              - { name: body, label: "Text", widget: text }
+          - name: behind
+            label: "Who is behind it"
+            widget: object
+            collapsed: true
+            summary: "{{title}}"
+            fields:
+              - { name: title, label: "Section heading", widget: string }
+              - { name: body, label: "Text", widget: markdown, required: false }
+              - name: cards
+                label: "Link cards"
+                label_singular: "Card"
+                widget: list
+                summary: "{{title}}"
+                fields:
+                  - { name: title, label: "Title", widget: string }
+                  - { name: body, label: "Teaser", widget: string, required: false }
+                  - { name: link_url, label: "Link", widget: string }
+                  - { name: link_text, label: "Link text", widget: string, default: "Read more" }
+          - name: built
+            label: "Why it was built"
+            widget: object
+            collapsed: true
+            summary: "{{title}}"
+            fields:
+              - { name: title, label: "Section heading", widget: string }
+              - { name: body, label: "Text", widget: markdown }
+          - name: considerations
+            label: "Key considerations"
+            widget: object
+            collapsed: true
+            summary: "{{title}}"
+            fields:
+              - { name: title, label: "Section heading", widget: string }
+              - name: items
+                label: "Tiles"
+                label_singular: "Tile"
+                widget: list
+                field: { name: item, label: "Tile text", widget: string }
+          - { name: layout, widget: hidden, default: about }
+          - { name: nav_key, widget: hidden, default: about }
+          - { name: permalink, widget: hidden, default: /about/ }
+
+      - file: _pages/funding-bodies.md
+        name: funding_bodies
+        label: "Funding Bodies"
+        icon: payments
+        description: "Page text and acknowledgement. The funder cards come from Lists → Funders."
+        fields:
+          - { name: title, label: "Heading", widget: string }
+          - { name: intro, label: "Intro", widget: text, required: false }
+          - name: acknowledgement
+            label: "Acknowledgement"
+            widget: object
+            fields:
+              - { name: title, label: "Heading", widget: string }
+              - { name: body, label: "Text", widget: markdown }
+          - { name: layout, widget: hidden, default: funding }
+          - { name: nav_key, widget: hidden, default: about }
+          - { name: permalink, widget: hidden, default: /about/funding-bodies/ }
+          - { name: parent, widget: hidden, default: { title: About, url: /about/ } }
+
+      - file: _pages/team.md
+        name: team_page
+        label: "Team / Collaborators"
+        icon: groups
+        description: "Page text. People and organisations come from Lists → Core team and Lists → Collaborating organisations."
+        fields:
+          - { name: title, label: "Heading", widget: string }
+          - { name: intro, label: "Intro", widget: markdown, required: false }
+          - { name: core_team_title, label: "Core team heading", widget: string }
+          - { name: collaborators_title, label: "Organisations heading", widget: string }
+          - { name: layout, widget: hidden, default: team }
+          - { name: nav_key, widget: hidden, default: about }
+          - { name: permalink, widget: hidden, default: /about/team/ }
+          - { name: parent, widget: hidden, default: { title: About, url: /about/ } }
+
+      - file: _pages/contact.md
+        name: contact
+        label: "Contact Us"
+        icon: mail
+        fields:
+          - { name: title, label: "Heading", widget: string }
+          - { name: intro, label: "Intro", widget: markdown, required: false }
+          - { name: details_title, label: "Contact details heading", widget: string }
+          - { name: email, label: "Email address", widget: string, required: false }
+          - { name: postal_address, label: "Postal address", widget: text, required: false, comment: "One line per address line." }
+          - { name: show_form, label: "Show contact form", widget: boolean, default: true, comment: "Submissions arrive via Netlify Forms (only on the live site)." }
+          - { name: submit_label, label: "Send button label", widget: string, default: "Send" }
+          - { name: layout, widget: hidden, default: contact }
+          - { name: nav_key, widget: hidden, default: contact }
+          - { name: permalink, widget: hidden, default: /contact/ }
+
+      - file: _pages/contact-thanks.md
+        name: contact_thanks
+        label: "Contact: thank-you page"
+        icon: check_circle
+        description: "Shown after someone sends the contact form."
+        fields:
+          - { name: title, label: "Heading", widget: string }
+          - { name: body, label: "Text", widget: markdown }
+          - { name: layout, widget: hidden, default: page }
+          - { name: nav_key, widget: hidden, default: contact }
+          - { name: permalink, widget: hidden, default: /contact/thanks/ }
+          - { name: sitemap, widget: hidden, default: false }
+
+  # ───────────────────────────────────────────────────────────────── Lists
+  - name: lists
+    label: "Lists"
+    icon: list
+    description: "Lists shown on one or more pages. Order here = order on the site."
+    editor:
+      preview: false
+    files:
+
+      - file: _data/funders.yml
+        name: funders
+        label: "Funders"
+        icon: payments
+        format: yml
+        description: "Cards on Funding Bodies, and the 'Funded by' badges in the footer of every page."
+        fields:
+          - name: funders
+            label: "Funders"
+            label_singular: "Funder"
+            widget: list
+            summary: "{{name}}"
+            fields:
+              - { name: name, label: "Full name", widget: string }
+              - { name: short_name, label: "Short name (footer badge)", widget: string, required: false }
+              - name: logo
+                label: "Logo"
+                widget: image
+                required: false
+                media_folder: /assets/images/funders
+                public_folder: /assets/images/funders
+                choose_url: false
+                accept: "image/jpeg,image/png,image/svg+xml,image/webp"
+              - { name: description, label: "What they fund", widget: text, required: false }
+              - { name: url, label: "Website", widget: string, required: false }
+              - { name: show_in_footer, label: "Show in footer", widget: boolean, default: true }
+
+      - file: _data/team.yml
+        name: team
+        label: "Core team"
+        icon: people
+        format: yml
+        description: "People on the Team / Collaborators page."
+        fields:
+          - name: members
+            label: "Members"
+            label_singular: "Member"
+            widget: list
+            summary: "{{name}}"
+            fields:
+              - { name: name, label: "Name", widget: string }
+              - { name: role, label: "Role", widget: string, required: false }
+              - { name: organisation, label: "Organisation", widget: string, required: false }
+              - name: photo
+                label: "Photo"
+                widget: image
+                required: false
+                media_folder: /assets/images/team
+                public_folder: /assets/images/team
+                choose_url: false
+                accept: "image/jpeg,image/png,image/webp"
+              - { name: url, label: "Profile link", widget: string, required: false }
+
+      - file: _data/collaborators.yml
+        name: collaborators
+        label: "Collaborating organisations"
+        icon: handshake
+        format: yml
+        description: "Logo row on the Team / Collaborators page."
+        fields:
+          - name: organisations
+            label: "Organisations"
+            label_singular: "Organisation"
+            widget: list
+            summary: "{{name}}"
+            fields:
+              - { name: name, label: "Name (also the logo's alt text)", widget: string }
+              - name: logo
+                label: "Logo"
+                widget: image
+                required: false
+                media_folder: /assets/images/collaborators
+                public_folder: /assets/images/collaborators
+                choose_url: false
+                accept: "image/jpeg,image/png,image/svg+xml,image/webp"
+              - { name: url, label: "Website", widget: string, required: false }
+
+  # ───────────────────────────────────────────────────────── Site settings
+  - name: settings
+    label: "Site settings"
+    icon: settings
+    editor:
+      preview: false
+    files:
+      - file: _data/settings.yml
+        name: site_settings
+        label: "Site settings"
+        icon: settings
+        format: yml
+        description: "Site name, logo, footer text and the shared 'Have a study in mind?' banner."
+        fields:
+          - { name: site_name, label: "Site name", widget: string, comment: "Shown in the header when no logo is set." }
+          - name: logo
+            label: "Logo"
+            widget: image
+            required: false
+            choose_url: false
+            accept: "image/png,image/svg+xml,image/webp"
+          - { name: funded_by_label, label: "Footer: 'Funded by' heading", widget: string }
+          - { name: copyright, label: "Footer: copyright line", widget: string }
+          - name: study_cta
+            label: "'Have a study in mind?' banner"
+            widget: object
+            comment: "Shown on pages that have the banner switched on (Home, Why our app?)."
+            fields:
+              - { name: title, label: "Heading", widget: string }
+              - { name: body, label: "Text", widget: string, required: false }
+              - { name: button_label, label: "Button label", widget: string }
+              - { name: button_url, label: "Button link", widget: string }

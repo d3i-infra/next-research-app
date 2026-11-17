@@ -1,0 +1,9 @@
+site_name: "The Next Research App"
+logo: ""
+copyright: "© 2026 The Next Research App"
+funded_by_label: "Funded by"
+study_cta:
+  title: "Have a study in mind?"
+  body: "Tell us how you envision using the app."
+  button_label: "Submit your use case"
+  button_url: "/contact/"

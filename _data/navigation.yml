@@ -1,0 +1,18 @@
+# Developer-owned (not in the CMS): URL changes need matching permalinks.
+# `key` matches a page's `nav_key` front matter to mark the active item;
+# subpages (Funding Bodies, Team) carry the key of their section.
+#
+# Under construction, add back when their pages exist:
+#   - { key: news, title: "News & Events", url: "/news/" }   (between About and Why our app?)
+#   - Privacy policy in the footer
+main:
+  - { key: home, title: "Home", url: "/" }
+  - { key: about, title: "About", url: "/about/" }
+  - { key: why, title: "Why our app?", url: "/why-our-app/" }
+  - { key: contact, title: "Contact Us", url: "/contact/" }
+
+footer:
+  - { title: "About", url: "/about/" }
+  - { title: "Funding Bodies", url: "/about/funding-bodies/" }
+  - { title: "Team", url: "/about/team/" }
+  - { title: "Contact Us", url: "/contact/" }

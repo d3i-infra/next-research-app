@@ -1,0 +1,52 @@
+---
+layout: default
+---
+<header class="page-header">
+  {% include breadcrumb.html %}
+  <h1 class="page-title">{{ page.title }}</h1>
+  {%- if page.intro and page.intro != "" %}
+  <div class="page-intro prose">{{ page.intro | markdownify }}</div>
+  {%- endif %}
+</header>
+
+<section class="section core-team">
+  <h2 class="section__title">{{ page.core_team_title | default: "Core team" }}</h2>
+  <div class="card-grid card-grid--3">
+    {%- for person in site.data.team.members %}
+    <article class="person-card">
+      {%- capture photo_alt %}Photo of {{ person.name }}{% endcapture %}
+      {% include media.html src=person.photo alt=photo_alt class="media--avatar" %}
+      <h3 class="person-card__name">
+        {%- if person.url and person.url != "" -%}
+          <a href="{{ person.url }}">{{ person.name }}</a>
+        {%- else -%}
+          {{ person.name }}
+        {%- endif -%}
+      </h3>
+      {%- if person.role and person.role != "" %}
+      <p class="person-card__role">{{ person.role }}</p>
+      {%- endif %}
+      {%- if person.organisation and person.organisation != "" %}
+      <p class="person-card__organisation">{{ person.organisation }}</p>
+      {%- endif %}
+    </article>
+    {%- endfor %}
+  </div>
+</section>
+
+{%- assign orgs = site.data.collaborators.organisations -%}
+{%- if orgs and orgs.size > 0 %}
+<section class="section collaborators">
+  <h2 class="section__title">{{ page.collaborators_title | default: "Collaborating organisations" }}</h2>
+  <ul class="logo-row">
+    {%- for org in orgs %}
+    <li class="logo-row__item">
+      {%- if org.url and org.url != "" %}<a class="logo-row__link" href="{{ org.url }}">{% endif -%}
+      {%- capture org_alt %}{{ org.name }}{% endcapture -%}
+      {% include media.html src=org.logo alt=org_alt class="media--logo" %}
+      {%- if org.url and org.url != "" %}</a>{% endif %}
+    </li>
+    {%- endfor %}
+  </ul>
+</section>
+{%- endif %}

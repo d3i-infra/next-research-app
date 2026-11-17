@@ -1,0 +1,4 @@
+{%- comment -%} Params: label, url, style (primary | secondary). {%- endcomment -%}
+{%- if include.label and include.label != "" and include.url and include.url != "" -%}
+<a class="button button--{{ include.style | default: 'primary' }}" href="{{ include.url | relative_url }}">{{ include.label }}</a>
+{%- endif -%}

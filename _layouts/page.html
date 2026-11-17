@@ -1,0 +1,13 @@
+---
+layout: default
+---
+{%- comment -%} Plain text page: breadcrumb, title, markdown body. Used by 404 and the contact thank-you page. {%- endcomment -%}
+<article class="page">
+  <header class="page-header">
+    {% include breadcrumb.html %}
+    <h1 class="page-title">{{ page.title }}</h1>
+  </header>
+  <div class="prose">
+    {{ content }}
+  </div>
+</article>

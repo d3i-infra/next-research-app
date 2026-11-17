@@ -1,0 +1,15 @@
+{%- comment -%} Shared "Have a study in mind?" banner, edited once in Site settings. {%- endcomment -%}
+{%- assign cta = site.data.settings.study_cta -%}
+{%- if page.show_study_cta and cta -%}
+<section class="study-cta">
+  <div class="study-cta__text">
+    <h2 class="study-cta__title">{{ cta.title }}</h2>
+    {%- if cta.body and cta.body != "" %}
+    <p class="study-cta__body">{{ cta.body }}</p>
+    {%- endif %}
+  </div>
+  <div class="study-cta__action">
+    {% include button.html label=cta.button_label url=cta.button_url style="primary" %}
+  </div>
+</section>
+{%- endif -%}

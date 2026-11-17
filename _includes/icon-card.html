@@ -1,0 +1,16 @@
+{%- comment -%} Card with icon, title, body. Param: item (icon, title, body), class. {%- endcomment -%}
+<article class="icon-card {{ include.class }}">
+  <div class="icon-card__icon">
+    {%- if include.item.icon and include.item.icon != "" -%}
+      <img src="{{ include.item.icon | relative_url }}" alt="">
+    {%- else -%}
+      <span class="icon-card__icon-placeholder" aria-hidden="true">Icon</span>
+    {%- endif -%}
+  </div>
+  <div class="icon-card__content">
+    <h3 class="icon-card__title">{{ include.item.title }}</h3>
+    {%- if include.item.body and include.item.body != "" %}
+    <p class="icon-card__body">{{ include.item.body }}</p>
+    {%- endif %}
+  </div>
+</article>

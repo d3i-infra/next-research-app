@@ -1,0 +1,19 @@
+funders:
+  - name: "Dutch Research Council (NWO)"
+    short_name: "NWO"
+    logo: ""
+    description: "Vidi project VI.Vidi.221S.031: Improving the methods of digital behavioral data collection for the social sciences"
+    url: "https://www.nwo.nl/"
+    show_in_footer: true
+  - name: "Statistics Netherlands (CBS)"
+    short_name: "CBS"
+    logo: ""
+    description: "App-based studies (travel, budget), consent to sensor measurement experiment, LISS data collection on hypothetical willingness"
+    url: "https://www.cbs.nl/"
+    show_in_footer: true
+  - name: "ODISSEI"
+    short_name: "ODISSEI"
+    logo: ""
+    description: "LISS Panel data collection on privacy concerns"
+    url: "https://odissei-data.nl/"
+    show_in_footer: true
