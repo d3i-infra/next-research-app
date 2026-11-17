@@ -7,6 +7,6 @@ intro: "[Introduction to be added]"
 details_title: Contact details
 email: "[address]"
 postal_address: "[address]"
-show_form: true
-submit_label: Send
+email_subject: Question about The Next Research App
+button_label: Write to us
 ---

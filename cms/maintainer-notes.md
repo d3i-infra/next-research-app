@@ -16,20 +16,15 @@ The org forbids Actions from creating PRs, so `publish-cms-edits.yml` squash-mer
 
 Still to do:
 1. **Custom domain** (when there is one): update `url` in `_config.yml`, and `site_url` / `display_url` in `admin/config.yml`.
-2. **Netlify production** (not set up yet; don't run `deploy-production.yml` until it is):
-   - create a Netlify site;
-   - add the `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` repository secrets;
-   - create a `production` environment with a required reviewer;
-   - enable *Forms → Form detection* plus an email notification for the `contact` form;
-   - set the `url:` in the workflow.
-3. **Editors**: each one creates a fine-grained GitHub PAT, resource owner `d3i-infra`, repository `next-research-app` only, *Contents: Read and write*. They paste it at `/admin/` → "Sign in with Access Token". The org may have to approve fine-grained tokens first.
+2. **Editors**: each one creates a fine-grained GitHub PAT, resource owner `d3i-infra`, repository `next-research-app` only, *Contents: Read and write*. They paste it at `/admin/` → **"Sign in with Access Token"**. The org may have to approve fine-grained tokens first.
+   - Do **not** use "Sign in with GitHub": that button needs an OAuth helper, which by default lives at Netlify (`api.netlify.com`), so it fails here. Making it work needs our own OAuth proxy (e.g. the `sveltia-cms-auth` Cloudflare Worker, configured with `base_url` under `backend:`).
 
 ## How it works
 
 - **Saves** in the CMS commit to `cms-staging`.
 - **Publish Changes** (CMS header button, or Actions → "Publish CMS edits") builds `cms-staging`, squash-merges it into `main` with plain git (no PR), resets `cms-staging`, and deploys staging.
-- **Staging**: GitHub Pages, on every push to `main`. The build gets the Pages base path (`/REPO/`) automatically.
-- **Production**: Netlify, only via a manual run of "Deploy to Netlify (production)" plus reviewer approval.
+- **Hosting**: GitHub Pages only, deployed on every push to `main` (so every Publish goes live). The build gets the Pages base path (`/next-research-app/`) automatically.
+- No Netlify and no separate production step. The D3I setup's Netlify production deploy was removed; get it from the D3I repo if a gated production site is needed later.
 - `reset-cms-staging.yml` force-resets `cms-staging` to `main` on every push to `main`.
 - **Caveat**: if you ever merge `cms-staging` → `main` by hand, check that the squash message has no `[skip ci]` line, or the push workflows won't run.
 
@@ -45,14 +40,12 @@ The D3I daily cron rebuild and `production` snapshot branch were dropped: this s
 | Pages → Funding Bodies | `_pages/funding-bodies.md` | `_layouts/funding.html` (cards from Funders) |
 | Pages → Team / Collaborators | `_pages/team.md` | `_layouts/team.html` (members and organisations are lists in the page itself) |
 | Pages → Contact Us | `_pages/contact.md` | `_layouts/contact.html` |
-| Pages → Contact: thank-you page | `_pages/contact-thanks.md` | `_layouts/page.html` |
 | Lists → Funders | `_data/funders.yml` | Funding Bodies cards + footer "Funded by" (`show_in_footer`) |
 | Site settings | `_data/settings.yml` | Header, footer, "Have a study in mind?" banner |
 
 **Not in the CMS, on purpose:**
 - Navigation (`_data/navigation.yml`): URLs need matching permalinks.
 - Layouts and `main.css`.
-- The contact form's fields: their names are the Netlify submission keys.
 - 404 page.
 - Hidden per-page keys (`layout`, `permalink`, `nav_key`, `parent`): kept as `widget: hidden` so saves preserve them.
 
@@ -70,8 +63,8 @@ The D3I daily cron rebuild and `production` snapshot branch were dropped: this s
 - **Empty optional fields are saved as `''`**, which Liquid treats as true. Always guard with `{% if x and x != "" %}`, never a bare `{% if x %}`. Liquid 4 has no `blank` literal.
 - **No Liquid in editable text.** The markdown editor mangles `{% %}` tags. Anything dynamic belongs in a layout or include, driven by fields.
 - **First CMS save normalizes a file** (key order, quotes). Expect one cosmetic diff per file.
-- **Links typed inside markdown bodies** (e.g. `[home](/)`) do not get the staging base path. They work on production; on a project Pages staging site they point to the domain root. Link fields (buttons, cards) are fine.
-- **The contact form only works on Netlify (production).** GitHub Pages answers the POST with 405.
+- **Links typed inside markdown bodies** (e.g. `[home](/)`) do not get the staging base path. They break on a project Pages site (they point to the domain root); they will work once the site has its own domain. Link fields (buttons, cards) are fine.
+- **No contact form.** GitHub Pages cannot receive form posts, so Contact shows the details and a "Write to us" mailto button (shown only when the email field holds a real address). To bring a form back, post it to a form service (Formspree, Web3Forms, ...) from `_layouts/contact.html`.
 - **Sveltia is pinned** in `admin/index.html`. To upgrade: bump the version, then run `node cms/validate-config.mjs` (CI runs it too). A schema error blocks sign-in for everyone.
 - Use `widget: datetime, type: date` for dates (not `widget: date`). Use `accept:` for image types (not `file_types`).
 

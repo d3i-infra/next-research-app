@@ -44,7 +44,7 @@ collections:
   - name: pages
     label: "Pages"
     icon: article
-    description: "One entry per page of the site. Lists used on several pages (funders, team, organisations) are under Lists."
+    description: "One entry per page of the site. Lists used on several pages (funders) are under Lists."
     editor:
       preview: false
     files:
@@ -343,25 +343,11 @@ collections:
           - { name: details_title, label: "Contact details heading", widget: string }
           - { name: email, label: "Email address", widget: string, required: false }
           - { name: postal_address, label: "Postal address", widget: text, required: false, comment: "One line per address line." }
-          - { name: show_form, label: "Show contact form", widget: boolean, default: true, comment: "Submissions arrive via Netlify Forms (only on the live site)." }
-          - { name: submit_label, label: "Send button label", widget: string, default: "Send" }
+          - { name: email_subject, label: "Subject line for emails", widget: string, required: false, comment: "Pre-filled when someone clicks the button." }
+          - { name: button_label, label: "Email button label", widget: string, default: "Write to us", comment: "The button only shows when the email address is a real address." }
           - { name: layout, widget: hidden, default: contact }
           - { name: nav_key, widget: hidden, default: contact }
           - { name: permalink, widget: hidden, default: /contact/ }
-
-      - file: _pages/contact-thanks.md
-        name: contact_thanks
-        label: "Contact: thank-you page"
-        icon: check_circle
-        description: "Shown after someone sends the contact form."
-        fields:
-          - { name: title, label: "Heading", widget: string }
-          - { name: body, label: "Text", widget: markdown }
-          - { name: layout, widget: hidden, default: page }
-          - { name: nav_key, widget: hidden, default: contact }
-          - { name: permalink, widget: hidden, default: /contact/thanks/ }
-          - { name: sitemap, widget: hidden, default: false }
-          - { name: home_link, widget: hidden, default: true }
 
   # ───────────────────────────────────────────────────────────────── Lists
   - name: lists
