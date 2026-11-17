@@ -1,0 +1,123 @@
+---
+layout: default
+title: Brand book
+permalink: /brand/
+sitemap: false
+noindex: true
+swatches:
+  - { group: "Neutrals", tokens: [brand-paper, brand-paper-light, brand-paper-deep, brand-rule, brand-rule-strong, brand-graphite, brand-ink] }
+  - { group: "Forest: the institution", tokens: [brand-forest, brand-forest-deep, brand-sage] }
+  - { group: "Signal: the thing to notice", tokens: [brand-signal, brand-signal-tint] }
+---
+{%- comment -%}
+  Developer-owned (not in the CMS, not in the nav). Every specimen on this
+  page is drawn with the real classes and tokens from assets/css/main.css,
+  so changing a token there changes this page too. Swatch values are read
+  live from the stylesheet by the script at the bottom.
+{%- endcomment -%}
+<div class="brand-book">
+<header class="page-header">
+  <p class="page-eyebrow">Brand book · v0.1</p>
+  <h1 class="page-title">Field notes</h1>
+  <p class="page-intro">How The Next Research App looks, and why. A notebook kept by a research team: warm paper, dark ink, and one vermilion line, the signal a phone records from everyday life.</p>
+</header>
+
+<section class="section">
+  <h2 class="section__title">Principles</h2>
+  <div class="prose brand-rules">
+    <ul>
+      <li><strong>Academic, not commercial.</strong> We describe; we don't sell. Plain sentences, no superlatives, no stock photos, no gradients.</li>
+      <li><strong>Made by hand, visibly.</strong> Hairline rules, numbered sections, captions in mono: the conventions of a paper, used with care.</li>
+      <li><strong>One signal per view.</strong> Vermilion marks what to notice: a section number, a list marker, the trace. Never a block of body text.</li>
+      <li><strong>Change the tokens, not the pages.</strong> Every colour, face, size and radius is a token in section 1 of <code>main.css</code>. This page redraws itself from them.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section__title">Colour</h2>
+  <p class="brand-lede">Three families. Neutrals carry the page. Forest is the institution: buttons, links, the footer. Signal is the accent, used sparingly.</p>
+  {%- for set in page.swatches %}
+  <h3>{{ set.group }}</h3>
+  <div class="swatches">
+    {%- for t in set.tokens %}
+    <div class="swatch">
+      <div class="swatch__chip" style="background: var(--{{ t }})"></div>
+      <div class="swatch__meta"><div class="swatch__name">--{{ t }}</div><div class="swatch__value" data-token="--{{ t }}"></div></div>
+    </div>
+    {%- endfor %}
+  </div>
+  {%- endfor %}
+  <div class="prose brand-rules">
+    <ul>
+      <li>The page is <code>--color-bg</code> (paper); cards and inputs sit on <code>--color-surface</code>, a lighter paper.</li>
+      <li>Text is ink; secondary text is graphite. Signal is never body text: only numbers, markers, labels and the trace.</li>
+      <li>Forest-deep is the one dark ground: the footer and the "Have a study in mind?" banner.</li>
+      <li>Tints (<code>sage</code>, <code>signal-tint</code>) are for panels and selection, never for text.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section__title">Type</h2>
+  <p class="brand-lede">A serif to state things, a sans to read, a mono to annotate. Sizes come from one base and one ratio (<code>--type-base</code>, <code>--type-ratio</code>), so changing either rescales the whole site.</p>
+  <div class="specimen"><span class="specimen__label">Display · Newsreader 400 · step 5</span><span class="page-title" style="margin:0">Data from daily life</span></div>
+  <div class="specimen"><span class="specimen__label">Heading · Newsreader 500 · step 3</span><h2 style="font-size:var(--step-3);margin:0">Research app for the social sciences</h2></div>
+  <div class="specimen"><span class="specimen__label">Subheading · Newsreader italic · step 2</span><p class="hero__subtitle" style="margin:0">Building a research app infrastructure</p></div>
+  <div class="specimen"><span class="specimen__label">Body · Libre Franklin 400 · step 0</span><p style="margin:0;max-width:var(--measure)">Collect survey data, geolocation, app usage and physical activity through the sensors of a smartphone, while participants stay in control of their data.</p></div>
+  <div class="specimen"><span class="specimen__label">Label · IBM Plex Mono · step −2, uppercase</span><span class="page-eyebrow" style="margin:0">For researchers</span></div>
+</section>
+
+<section class="section">
+  <h2 class="section__title">Motif</h2>
+  <p class="brand-lede">The signal trace: a flat line, two bursts of movement, then a wandering location track. It underlines the hero, crosses the footer's edge and runs faintly behind the call to action. Never more than one prominent trace per view.</p>
+  <div class="brand-demo"><div class="trace-sample"></div></div>
+  <p class="brand-lede">Supporting conventions: numbered section headings (<code>01</code>), lettered lists, figures on graph paper captioned "Fig.", and a faint paper grain (<code>--grain-opacity</code>, 0 to switch it off).</p>
+  <div class="card-grid card-grid--2">
+    {% include media.html src="" alt="App screenshot" class="media--illustration" %}
+    <ul class="tile-grid">
+      <li class="tile">Survey data, including EMA</li>
+      <li class="tile">Geolocation data</li>
+      <li class="tile">Physical activity data</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section__title">Components</h2>
+  <div class="brand-demo">
+    {% include button.html label="Primary action" url="#" style="primary" %}
+    {% include button.html label="Secondary" url="#" style="secondary" %}
+    <span class="badge" style="margin:0">Our focus</span>
+    <a href="#">An inline link</a>
+  </div>
+  <div class="prose brand-rules">
+    <ul>
+      <li>One primary button per view. It carries the signal offset; pressing it closes the gap.</li>
+      <li>Cards are paper with a hairline, 2px radius: printed, not app-like. Feature lists are open columns under a rule, not boxes.</li>
+      <li>Images sit at 4px radius. Until an image exists, its description shows as a captioned figure.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section__title">Voice</h2>
+  <div class="prose brand-rules">
+    <ul>
+      <li>Write for researchers: plain, second person, short declarative sentences.</li>
+      <li>Say what the app does and how it was studied. Avoid "powerful", "seamless", "unlock", "revolutionary".</li>
+      <li>Numbers carry their base and status: "X of Y invited participants", "preliminary".</li>
+    </ul>
+  </div>
+</section>
+</div>
+
+<script>
+  // Fill each swatch with the token's live value from main.css.
+  (function () {
+    var styles = getComputedStyle(document.documentElement);
+    document.querySelectorAll('[data-token]').forEach(function (el) {
+      el.textContent = styles.getPropertyValue(el.dataset.token).trim();
+    });
+  })();
+</script>

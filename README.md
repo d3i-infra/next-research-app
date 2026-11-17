@@ -23,7 +23,9 @@ in a Chromium browser and choose "Work with Local Repository".
 | Site name, logo, footer, "Have a study in mind?" banner | `_data/settings.yml` |
 | Navigation (developer-owned) | `_data/navigation.yml` |
 | Page structure | `_layouts/` (one per page type), `_includes/` |
-| **All styling** | `assets/css/main.css` |
+| **All styling** | `assets/css/main.css`: brand tokens in section 1, everything else derives from them |
+| Brand book (live, unlisted) | `/brand/` (`_pages/brand.html`), rendered from the same tokens |
+| Fonts (self-hosted, SIL OFL) | `assets/fonts/` |
 | CMS config | `admin/config.yml` (validated in CI by `cms/validate-config.mjs`) |
 | Wireframes the pages were built from | `docs/wireframes/` |
 
