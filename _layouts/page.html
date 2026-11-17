@@ -10,4 +10,7 @@ layout: default
   <div class="prose">
     {{ content }}
   </div>
+  {%- if page.home_link %}
+  <p class="page-home-link"><a href="{{ '/' | relative_url }}">Go to the homepage</a></p>
+  {%- endif %}
 </article>

@@ -10,8 +10,7 @@
 # developer-owned and kept as hidden fields so saves preserve them.
 backend:
   name: github
-  # TODO: set to the new repository (owner/name).
-  repo: OWNER/REPO
+  repo: d3i-infra/next-research-app
   branch: cms-staging
   # Shows the "Publish Changes" button (fires the sveltia-cms-publish
   # repository_dispatch → .github/workflows/publish-cms-edits.yml) and
@@ -19,9 +18,9 @@ backend:
   # cms-staging pushes).
   skip_ci: true
 
-# TODO: set to the staging URL (GitHub Pages) of the new repository.
-site_url: https://OWNER.github.io/REPO
-display_url: https://OWNER.github.io/REPO
+# Staging (GitHub Pages). Update when the site moves / gets a domain.
+site_url: https://d3i-infra.github.io/next-research-app/
+display_url: https://d3i-infra.github.io/next-research-app/
 app_title: "The Next Research App admin"
 
 media_folder: assets/images
@@ -362,6 +361,7 @@ collections:
           - { name: nav_key, widget: hidden, default: contact }
           - { name: permalink, widget: hidden, default: /contact/thanks/ }
           - { name: sitemap, widget: hidden, default: false }
+          - { name: home_link, widget: hidden, default: true }
 
   # ───────────────────────────────────────────────────────────────── Lists
   - name: lists

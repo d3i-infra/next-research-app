@@ -5,8 +5,9 @@ description: >-
   An affordable, open-source research app for data collection in the social
   sciences.
 baseurl: ""
-# TODO: set to the production domain once known.
-url: "https://example.org"
+# GitHub Pages for now; set to the custom domain once there is one.
+# baseurl is passed by the Pages build (/next-research-app).
+url: "https://d3i-infra.github.io"
 
 plugins:
   - jekyll-sitemap
