@@ -39,7 +39,12 @@
 
 /* 2. Base ------------------------------------------------------------------ */
 *, *::before, *::after { box-sizing: border-box; }
+/* Sticky footer: main grows to fill the viewport on short pages. */
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   font-family: var(--font-body);
   line-height: 1.5;
@@ -64,7 +69,7 @@ a { color: inherit; }
 
 /* 3. Layout ---------------------------------------------------------------- */
 .container { max-width: var(--container); margin: 0 auto; padding: 0 var(--space-2); }
-.site-main { padding: var(--space-4) 0 var(--space-5); }
+.site-main { flex: 1 0 auto; padding: var(--space-4) 0 var(--space-5); }
 .section { margin-top: var(--space-5); }
 .section__title { font-size: 1.5rem; }
 
