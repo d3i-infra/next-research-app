@@ -17,9 +17,9 @@ swatches:
 {%- endcomment -%}
 <div class="brand-book">
 <header class="page-header">
-  <p class="page-eyebrow">Brand book · v0.1</p>
+  <p class="page-eyebrow">Brand book · v0.2</p>
   <h1 class="page-title">Field notes</h1>
-  <p class="page-intro">How The Next Research App looks, and why. A notebook kept by a research team: warm paper, dark ink, and one vermilion line, the signal a phone records from everyday life.</p>
+  <p class="page-intro">How The Next Research App looks, and why. A notebook kept by a research team: warm paper, dark ink, content on cards, and a vermilion accent for what to notice.</p>
 </header>
 
 <section class="section">
@@ -28,7 +28,7 @@ swatches:
     <ul>
       <li><strong>Academic, not commercial.</strong> We describe; we don't sell. Plain sentences, no superlatives, no stock photos, no gradients.</li>
       <li><strong>Made by hand, visibly.</strong> Hairline rules, numbered sections, captions in mono: the conventions of a paper, used with care.</li>
-      <li><strong>One signal per view.</strong> Vermilion marks what to notice: a section number, a list marker, the trace. Never a block of body text.</li>
+      <li><strong>One signal per view.</strong> Vermilion marks what to notice: a section number, a list marker, a label. Never a block of body text.</li>
       <li><strong>Change the tokens, not the pages.</strong> Every colour, face, size and radius is a token in section 1 of <code>main.css</code>. This page redraws itself from them.</li>
     </ul>
   </div>
@@ -51,7 +51,7 @@ swatches:
   <div class="prose brand-rules">
     <ul>
       <li>The page is <code>--color-bg</code> (paper); cards and inputs sit on <code>--color-surface</code>, a lighter paper.</li>
-      <li>Text is ink; secondary text is graphite. Signal is never body text: only numbers, markers, labels and the trace.</li>
+      <li>Text is ink; secondary text is graphite. Signal is never body text: only numbers, markers and labels.</li>
       <li>Forest-deep is the one dark ground: the footer and the "Have a study in mind?" banner.</li>
       <li>Tints (<code>sage</code>, <code>signal-tint</code>) are for panels and selection, never for text.</li>
     </ul>
@@ -70,9 +70,9 @@ swatches:
 
 <section class="section">
   <h2 class="section__title">Motif</h2>
-  <p class="brand-lede">The signal trace: a flat line, two bursts of movement, then a wandering location track. It underlines the hero, crosses the footer's edge and runs faintly behind the call to action. Never more than one prominent trace per view.</p>
+  <p class="brand-lede"><strong>Parked:</strong> the signal trace, a flat line, two bursts of movement, then a wandering location track. It is switched off for now; set <code>--trace-display</code> to <code>block</code> to bring it back under the hero, along the study banner, across the footer edge and as the logo mark.</p>
   <div class="brand-demo"><div class="trace-sample"></div></div>
-  <p class="brand-lede">Supporting conventions: numbered section headings (<code>01</code>), lettered lists, figures on graph paper captioned "Fig.", and a faint paper grain (<code>--grain-opacity</code>, 0 to switch it off).</p>
+  <p class="brand-lede">In use: numbered section headings (<code>01</code>), lettered lists, figures on graph paper captioned "Fig.", and a faint paper grain (<code>--grain-opacity</code>, 0 to switch it off).</p>
   <div class="card-grid card-grid--2">
     {% include media.html src="" alt="App screenshot" class="media--illustration" %}
     <ul class="tile-grid">
@@ -94,7 +94,7 @@ swatches:
   <div class="prose brand-rules">
     <ul>
       <li>One primary button per view. It carries the signal offset; pressing it closes the gap.</li>
-      <li>Cards are paper with a hairline, 2px radius: printed, not app-like. Feature lists are open columns under a rule, not boxes.</li>
+      <li>Content sits on cards: lighter paper, a hairline border, a soft shadow and a 6px radius. Every card on the site takes these from the card tokens (<code>--card-bg</code>, <code>--card-border</code>, <code>--card-radius</code>, <code>--card-padding</code>, <code>--card-shadow</code>).</li>
       <li>Images sit at 4px radius. Until an image exists, its description shows as a captioned figure.</li>
     </ul>
   </div>
