@@ -4,20 +4,30 @@ Adapted from the datadonation.eu (D3I) setup, which this site reuses as-is.
 
 ## First-time setup for the new repository (TODO)
 
-1. **`admin/config.yml`**: set `backend.repo` (`OWNER/REPO`) and `site_url` / `display_url` (staging URL).
-2. **`_config.yml`**: set `url` to the production domain. Also the `url:` in `.github/workflows/deploy-production.yml`.
-3. **Branches**: create `cms-staging` from `main` (`git push origin main:cms-staging`).
-4. **Settings → Pages**: Source = "GitHub Actions" (staging deploys from `deploy-staging.yml`).
-5. **Settings → Environments**: create `production` with a required reviewer.
-6. **Secrets**: `NETLIFY_AUTH_TOKEN`, `NETLIFY_SITE_ID` (repository-level).
-7. **Settings → Actions → General**: Workflow permissions "Read and write", and allow Actions to create pull requests (the publish workflow opens and merges a PR).
-8. **Netlify**: enable *Forms → Form detection*, and add a notification (email) for the `contact` form.
-9. **Editors**: each one creates a fine-grained GitHub PAT for this repo (Contents: read/write) and pastes it at `/admin/` → "Sign in with Access Token".
+Repo: `d3i-infra/next-research-app` (public; the org is on the free plan, which only serves Pages from public repos). Site: https://d3i-infra.github.io/next-research-app/
+
+Done:
+- `admin/config.yml` and `_config.yml` point at the repo and the Pages URL.
+- Pages source is "GitHub Actions".
+- Workflow permissions are "Read and write".
+- `cms-staging` exists.
+
+The org forbids Actions from creating PRs, so `publish-cms-edits.yml` squash-merges with plain git instead of a PR.
+
+Still to do:
+1. **Custom domain** (when there is one): update `url` in `_config.yml`, and `site_url` / `display_url` in `admin/config.yml`.
+2. **Netlify production** (not set up yet; don't run `deploy-production.yml` until it is):
+   - create a Netlify site;
+   - add the `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` repository secrets;
+   - create a `production` environment with a required reviewer;
+   - enable *Forms → Form detection* plus an email notification for the `contact` form;
+   - set the `url:` in the workflow.
+3. **Editors**: each one creates a fine-grained GitHub PAT, resource owner `d3i-infra`, repository `next-research-app` only, *Contents: Read and write*. They paste it at `/admin/` → "Sign in with Access Token". The org may have to approve fine-grained tokens first.
 
 ## How it works
 
 - **Saves** in the CMS commit to `cms-staging`.
-- **Publish Changes** (CMS header button, or Actions → "Publish CMS edits") builds `cms-staging`, squash-merges it into `main`, resets `cms-staging`, and deploys staging.
+- **Publish Changes** (CMS header button, or Actions → "Publish CMS edits") builds `cms-staging`, squash-merges it into `main` with plain git (no PR), resets `cms-staging`, and deploys staging.
 - **Staging**: GitHub Pages, on every push to `main`. The build gets the Pages base path (`/REPO/`) automatically.
 - **Production**: Netlify, only via a manual run of "Deploy to Netlify (production)" plus reviewer approval.
 - `reset-cms-staging.yml` force-resets `cms-staging` to `main` on every push to `main`.
